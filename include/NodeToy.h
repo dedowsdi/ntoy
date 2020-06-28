@@ -81,7 +81,7 @@ private:
 
     bool readShaders(osg::ArgumentParser& args);
 
-    bool readShader(
+    osg::Shader* readShader(
         osg::ArgumentParser& args, const std::string& option, int shaderType = -1);
 
     void setupProgram();

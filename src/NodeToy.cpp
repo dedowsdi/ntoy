@@ -555,20 +555,20 @@ bool NodeToy::readShaders(osg::ArgumentParser& args)
     std::string file;
     while (args.read("--shader", file))
     {
-        b |= readShader(args, "--shader");
+        b |= readShader(args, "--shader") != 0;
     }
 
-    b |= readShader(args, "--vert");
-    b |= readShader(args, "--geom");
-    b |= readShader(args, "--frag");
-    b |= readShader(args, "--tesc");
-    b |= readShader(args, "--tese");
-    b |= readShader(args, "--comp");
+    b |= (_vert = readShader(args, "--vert")) != 0;
+    b |= (_geom = readShader(args, "--geom")) != 0;
+    b |= (_frag = readShader(args, "--frag")) != 0;
+    b |= (_tesc = readShader(args, "--tesc")) != 0;
+    b |= (_tese = readShader(args, "--tese")) != 0;
+    b |= (_comp = readShader(args, "--comp")) != 0;
 
     return b;
 }
 
-bool NodeToy::readShader(
+osg::Shader* NodeToy::readShader(
     osg::ArgumentParser& args, const std::string& option, int shaderType)
 {
     if (!_program)
@@ -586,11 +586,11 @@ bool NodeToy::readShader(
         {
             _observer->addResource(createShaderResource(shader));
             _program->addShader(shader);
-            return true;
+            return shader;
         }
     }
 
-    return false;
+    return 0;
 }
 
 void NodeToy::setupProgram()
