@@ -88,7 +88,7 @@ private:
 
     void readDefines(osg::ArgumentParser& args);
 
-    void createShadertoy();
+    void createShadertoyNode();
 
     void readNode(osg::ArgumentParser& args);
 

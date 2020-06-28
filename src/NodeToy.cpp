@@ -244,16 +244,7 @@ NodeToy::NodeToy(osg::ArgumentParser& args, osgViewer::Viewer* viewer) : _viewer
     }
 
     bool shadertoy = args.find("--shadertoy") != -1;
-
-    if (shadertoy && args.find("--frag") == -1)
-    {
-        auto file = createDefaultFrag();
-        auto fragShader = osgDB::readShaderFile(osg::Shader::FRAGMENT, file);
-        _observer->addResource(createShaderResource(fragShader));
-    }
-
     bool needProgram = shadertoy;
-
     needProgram |= readShaders(args);
 
     if (needProgram)
@@ -267,7 +258,7 @@ NodeToy::NodeToy(osg::ArgumentParser& args, osgViewer::Viewer* viewer) : _viewer
 
     if (shadertoy)
     {
-        createShadertoy();
+        createShadertoyNode();
     }
     else
     {
@@ -629,15 +620,22 @@ void NodeToy::readDefines(osg::ArgumentParser& args)
     }
 }
 
-void NodeToy::createShadertoy()
+void NodeToy::createShadertoyNode()
 {
-    if (_nodeFile.empty())
+    assert(_program);
+    _sceneRoot->addChild(osgf::getNdcQuad());
+    _vert = new osg::Shader(osg::Shader::VERTEX, toyVertexSource);
+    _program->addShader(_vert);
+
+    if (!_frag)
     {
-        _sceneRoot->addChild(osgf::getNdcQuad());
-        _vert = new osg::Shader(osg::Shader::VERTEX, toyVertexSource);
-        _program->addShader(_vert);
-        OSG_NOTICE << "Draw unit ndc quad with pass through vertex shader." << std::endl;
+        auto file = createDefaultFrag();
+        _frag = osgDB::readShaderFile(osg::Shader::FRAGMENT, file);
+        _observer->addResource(createShaderResource(_frag));
+        _program->addShader(_frag);
     }
+
+    OSG_NOTICE << "Draw unit ndc quad with pass through vertex shader." << std::endl;
 }
 
 void NodeToy::readNode(osg::ArgumentParser& args)
