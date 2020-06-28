@@ -38,6 +38,27 @@ void main( void )
     gl_Position = gl_Vertex;
 })0";
 
+auto toyFragSource = R"0(#version 120
+
+#define PI 3.1415926535897932384626433832795
+#define PI_2 ( PI * 0.5 )
+#define PI_4 ( PI * 0.25 )
+#define PI_8 ( PI * 0.125 )
+
+uniform int osg_FrameNumber;
+uniform float osg_FrameTime;
+uniform float osg_DeltaFrameTime;
+uniform float osg_SimulationTime;
+uniform float osg_DeltaSimulationTime;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+void main( void )
+{
+    vec2 st = gl_FragCoord.xy / resolution;
+    gl_FragColor = vec4(st, 0, 1);
+})0";
+
 bool addResource(osg::ArgumentParser& parser, const std::string& option,
     ResourceObserver& observer, NodeToy& ntoy,
     void (NodeToy::*callback)(const std::string&))
@@ -398,27 +419,7 @@ std::string NodeToy::createDefaultFrag()
     }
 
     // use predfined frag
-    ofs << R"0(#version 120
-
-#define PI 3.1415926535897932384626433832795
-#define PI_2 ( PI * 0.5 )
-#define PI_4 ( PI * 0.25 )
-#define PI_8 ( PI * 0.125 )
-
-uniform int osg_FrameNumber;
-uniform float osg_FrameTime;
-uniform float osg_DeltaFrameTime;
-uniform float osg_SimulationTime;
-uniform float osg_DeltaSimulationTime;
-uniform vec2 mouse;
-uniform vec2 resolution;
-
-void main( void )
-{
-    vec2 st = gl_FragCoord.xy / resolution;
-    gl_FragColor = vec4(st, 0, 1);
-})0";
-
+    ofs << toyFragSource;
     return file;
 }
 
