@@ -178,24 +178,24 @@ GLenum stringToPixelFormat(const std::string& s)
         return GL_RGBA;
     if (us == "BGRA")
         return GL_BGRA;
-    if (us == "RED_INTEGER")
-        return GL_RED_INTEGER;
+    //if (us == "RED_INTEGER")
+        //return GL_RED_INTEGER;
     if (us == "RG_INTEGER")
         return GL_RG_INTEGER;
-    if (us == "RGB_INTEGER")
+/*    if (us == "RGB_INTEGER")
         return GL_RGB_INTEGER;
     if (us == "BGR_INTEGER")
         return GL_BGR_INTEGER;
     if (us == "RGBA_INTEGER")
         return GL_RGBA_INTEGER;
     if (us == "BGRA_INTEGER")
-        return GL_BGRA_INTEGER;
+        return GL_BGRA_INTEGER*/;
     if (us == "STENCIL_INDEX")
         return GL_STENCIL_INDEX;
     if (us == "DEPTH_COMPONENT")
         return GL_DEPTH_COMPONENT;
-    if (us == "DEPTH_STENCIL")
-        return GL_DEPTH_STENCIL;
+    //if (us == "DEPTH_STENCIL")
+        //return GL_DEPTH_STENCIL;
 
     throw std::runtime_error(" Unknown pixel format " + us);
 }

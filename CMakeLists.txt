@@ -30,7 +30,6 @@ find_package(OpenSceneGraph REQUIRED COMPONENTS
     osgDB
     osgUtil
     )
-find_package(PkgConfig REQUIRED)
 
 include_directories(
     ${OPENSCENEGRAPH_INCLUDE_DIRS}
