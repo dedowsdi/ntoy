@@ -44,6 +44,7 @@ set(SRC
     src/main.cpp
     src/Resource.cpp
     src/NodeToy.cpp
+    src/ToyViewer.cpp
     )
 
 add_executable(ntoy ${SRC})

@@ -6,6 +6,7 @@
 #include <osgViewer/ViewerEventHandlers>
 
 #include <NodeToy.h>
+#include <ToyViewer.h>
 
 namespace ntoy
 {
@@ -172,7 +173,8 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    osgViewer::Viewer viewer;
+    toy::ToyViewer viewer;
+    viewer.addEventHandler(new toy::ViewerDebugHandler(&viewer));
 
     viewer.realize();
 
